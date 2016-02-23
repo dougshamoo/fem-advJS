@@ -13,29 +13,30 @@ Widget.prototype.render = function($where){
 	}
 };
 
-function Button(/* ... */) {
-/*
-	...
-	this.$elem = $("<button>").text(this.label);
-*/
-}
+function Button(width, height, label) {
+	Widget.call(this, width, height);
+	this.label = label;
 
-/*
-Button -> render = function($where) {
+	this.$elem = $('<button>').text(this.label);
+}
+Button.prototype = Object.create(Widget.prototype);
+
+Button.prototype.render = function($where) {
 	// call the parent render()
 	// add a click handler -> onClick
+	Widget.prototype.render.call(this, $where);
+	this.$elem.click(this.onClick.bind(this));
 }
 
-Button -> onClick = function(evt) {
-	console.log("...");
+Button.prototype.onClick = function(evt) {
+	console.log('Button', this.label, 'clicked!');
 }
 
 $(document).ready(function(){
 	var $body = $(document.body);
-	var btn1 = ...;
-	var btn2 = ...;
+	var btn1 = new Button(200, 100, 'btn1');
+	var btn2 = new Button(350, 150, 'btn2');
 
 	btn1.render($body);
 	btn2.render($body);
 });
-*/
